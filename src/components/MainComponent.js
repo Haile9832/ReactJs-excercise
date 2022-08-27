@@ -3,6 +3,7 @@ import Home from "./HomeComponent";
 import Menu from "./MenuComponent";
 import DishDetail from "./DishdetailComponent";
 import Contact from "./ContactComponent";
+import About from "./AboutComponent";
 import Header from "./HeaderComponent";
 import Footer from "./FooterComponent";
 import { DISHES } from "../shared/dishes";
@@ -37,7 +38,9 @@ class Main extends Component {
 
       return (
         <DishDetail
-          dish={this.state.dishes.filter((dish) => dish.id === Number(dishId))[0]}
+          dish={
+            this.state.dishes.filter((dish) => dish.id === Number(dishId))[0]
+          }
           comments={this.state.comments.filter(
             (comment) => comment.dishId === Number(dishId)
           )}
@@ -52,6 +55,10 @@ class Main extends Component {
           <Route path="/home" element={<HomePage />} />
           <Route path="/menu" element={<Menu dishes={this.state.dishes} />} />
           <Route path="/menu/:dishId" element={<DishWithId />} />
+          <Route
+            path="/aboutus"
+            element={<About leaders={this.state.leaders} />}
+          />
           <Route path="/contactus" element={<Contact />} />
           <Route path="*" element={<Navigate to="/home" replace />} />
         </Routes>

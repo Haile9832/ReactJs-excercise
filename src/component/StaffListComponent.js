@@ -1,32 +1,44 @@
 import React, { useState } from "react";
-import StaffDetail from "./StaffdetailComponent";
+import { Link } from "react-router-dom";
 
 function StaffList({ staffs }) {
-  const [selectedStaff, setSelectedStaff] = useState();
+  const [searchValue, setSearchValue] = useState("");
+  const [valueSearch, setValueSearch] = useState("");
+  const handleSearch = () => {
+    setValueSearch(searchValue.toLowerCase());
+  };
+  console.log(searchValue);
   return (
     <div className="container">
       <div className="row">
-        {staffs.map((staff) => (
-          <div
-            className=" col-12 col-md-6 col-lg-4 mt-3"
-            onClick={() => setSelectedStaff(staff)}
-            key={staff.id}
-          >
-            <div
-              className="p-3 border border-dark rounded d-flex 
-          justify-content-center"
-            >
-              {staff.name}
-            </div>
-          </div>
-        ))}
+        <div className="d-flex justify-content-end">
+          <input
+            value={searchValue}
+            onChange={(e) => setSearchValue(e.target.value)}
+            className="me-3 rounded"
+          />
+          <button className="rounded" onClick={handleSearch}>
+            Tìm kiếm
+          </button>
+        </div>
       </div>
       <div className="row">
-        {selectedStaff ? (
-          <StaffDetail selectedStaff={selectedStaff} />
-        ) : (
-          <p className="mt-3">Bấm vào tên nhân viên để xem thông tin</p>
-        )}
+        {staffs
+          .filter((staff) => {
+            if (staff.name.toLowerCase().includes(valueSearch)) {
+              return true;
+            } else return false;
+          })
+          .map((staff) => (
+            <div className="col-6 col-md-4 col-lg-2 mt-3" key={staff.id}>
+              <Link to={`/stafflist/${staff.id}`}>
+                <div className="d-flex flex-column justify-content-center align-items-center border">
+                  <img src="./assets/images/alberto.png" width="100%" />
+                  {staff.name}
+                </div>
+              </Link>
+            </div>
+          ))}
       </div>
     </div>
   );

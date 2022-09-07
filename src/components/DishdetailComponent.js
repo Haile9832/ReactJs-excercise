@@ -1,4 +1,5 @@
 import React from "react";
+import CommentForm from "./CommentFormComponent";
 import {
   Card,
   CardImg,
@@ -58,6 +59,7 @@ const DishDetail = (props) => {
             {props.comments.map((comment) => (
               <RenderComments comment={comment} key={comment.id} />
             ))}
+            <CommentForm />
           </div>
         </div>
       </div>

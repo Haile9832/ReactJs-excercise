@@ -48,7 +48,6 @@ function Header() {
           </Collapse>
         </div>
       </Navbar>
-      ;
     </div>
   );
 }

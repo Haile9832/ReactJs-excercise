@@ -4,17 +4,23 @@ import StaffDetail from "./component/StaffdetailComponent";
 import Department from "./component/DepartmentComponent";
 import Salary from "./component/SalaryComponent";
 import Footer from "./component/FooterComponent";
-import { STAFFS, DEPARTMENTS } from "./shared/staffs";
 import { Routes, Route, Navigate, useParams } from "react-router-dom";
+import { connect } from "react-redux";
 import "./App.css";
 
-function App() {
+const mapStateToProps = (state) => {
+  return {
+    staffs: state.staffs,
+    departments: state.departments,
+  };
+};
+function App(props) {
   const StaffWithId = () => {
     const { staffId } = useParams();
     return (
       <StaffDetail
         selectedStaff={
-          STAFFS.filter((staff) => staff.id === Number(staffId))[0]
+          props.staffs.filter((staff) => staff.id === Number(staffId))[0]
         }
       />
     );
@@ -23,13 +29,16 @@ function App() {
     <div className="App">
       <Header />
       <Routes>
-        <Route path="/stafflist" element={<StaffList staffs={STAFFS} />} />
+        <Route
+          path="/stafflist"
+          element={<StaffList staffs={props.staffs} />}
+        />
         <Route path="/stafflist/:staffId" element={<StaffWithId />} />
         <Route
           path="/department"
-          element={<Department departments={DEPARTMENTS} />}
+          element={<Department departments={props.departments} />}
         />
-        <Route path="/salary" element={<Salary staffs={STAFFS} />} />
+        <Route path="/salary" element={<Salary staffs={props.staffs} />} />
         <Route path="*" element={<Navigate to="/stafflist" replace />} />
       </Routes>
       <Footer />
@@ -37,4 +46,4 @@ function App() {
   );
 }
 
-export default App;
+export default connect(mapStateToProps)(App);

@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import StaffAdd from "./StaffAddComponent";
 
 function StaffList({ staffs }) {
   const [searchValue, setSearchValue] = useState("");
@@ -7,19 +8,24 @@ function StaffList({ staffs }) {
   const handleSearch = () => {
     setValueSearch(searchValue.toLowerCase());
   };
-  console.log(searchValue);
   return (
-    <div className="container">
+    <div className="container mt-1">
       <div className="row">
-        <div className="d-flex justify-content-end">
-          <input
-            value={searchValue}
-            onChange={(e) => setSearchValue(e.target.value)}
-            className="me-3 rounded"
-          />
-          <button className="rounded" onClick={handleSearch}>
-            Tìm kiếm
-          </button>
+        <div className="d-flex flex-wrap border-bottom pb-3">
+          <StaffAdd />
+          <div className="d-flex col-12 col-md-6 justify-content-between mt-1 mt-md-0">
+            <input
+              value={searchValue}
+              onChange={(e) => setSearchValue(e.target.value)}
+              className="rounded col-9"
+            />
+            <button
+              className="rounded btn btn-primary col-2"
+              onClick={handleSearch}
+            >
+              Tìm
+            </button>
+          </div>
         </div>
       </div>
       <div className="row">

@@ -11,11 +11,13 @@ import {
 } from "reactstrap";
 import { Link } from "react-router-dom";
 import dateFormat from "dateformat";
+import { Loading } from "./LoadingComponent";
+import { baseUrl } from "../shared/baseUrl";
 
 function RenderDish({ dish }) {
   return (
     <Card>
-      <CardImg top src={dish.image} alt={dish.name} />
+      <CardImg top src={baseUrl + dish.image} alt={dish.name} />
       <CardBody>
         <CardTitle>{dish.name}</CardTitle>
         <CardText>{dish.description}</CardText>
@@ -23,7 +25,7 @@ function RenderDish({ dish }) {
     </Card>
   );
 }
-function RenderComments({ comment }) {
+function RenderComments({ comment, postComment, dishId }) {
   return (
     <div>
       <p>{comment.comment}</p>
@@ -35,7 +37,23 @@ function RenderComments({ comment }) {
 }
 
 const DishDetail = (props) => {
-  if (props.dish != null) {
+  if (props.isLoading) {
+    return (
+      <div className="container">
+        <div className="row">
+          <Loading />
+        </div>
+      </div>
+    );
+  } else if (props.errMess) {
+    return (
+      <div className="container">
+        <div className="row">
+          <h4>{props.errMess}</h4>
+        </div>
+      </div>
+    );
+  } else if (props.dish != null) {
     return (
       <div className="container">
         <div className="row">
@@ -57,9 +75,17 @@ const DishDetail = (props) => {
           <div className="col-12 col-md-5 mt-1">
             <h4>Comments</h4>
             {props.comments.map((comment) => (
-              <RenderComments comment={comment} key={comment.id} />
+              <RenderComments
+                comment={comment}
+                key={comment.id}
+                postComment={props.postComment}
+                dishId={props.dish.id}
+              />
             ))}
-            <CommentForm />
+            <CommentForm
+              dishId={props.dish.id}
+              postComment={props.postComment}
+            />
           </div>
         </div>
       </div>

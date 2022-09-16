@@ -28,8 +28,12 @@ class CommentForm extends Component {
   }
   handleSubmitComment(values) {
     this.toggleModal();
-    console.log("Current State is: " + JSON.stringify(values));
-    alert("Current State is: " + JSON.stringify(values));
+    this.props.postComment(
+      this.props.dishId,
+      values.rating,
+      values.author,
+      values.comment
+    );
   }
   render() {
     return (
@@ -63,14 +67,14 @@ class CommentForm extends Component {
                 </Col>
               </Row>
               <Row className="form-group mt-2">
-                <Label htmlFor="name" className="fw-bold">
+                <Label htmlFor="author" className="fw-bold">
                   Your Name
                 </Label>
                 <Col>
                   <Control.text
-                    model=".name"
-                    id="name"
-                    name="name"
+                    model=".author"
+                    id="author"
+                    name="author"
                     placeholder="Your Name"
                     className="form-control"
                     validators={{

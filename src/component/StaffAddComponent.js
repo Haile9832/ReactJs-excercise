@@ -3,14 +3,22 @@ import { Modal } from "react-bootstrap";
 import { Button, Row, Col, Label } from "reactstrap";
 import { Control, LocalForm, Errors } from "react-redux-form";
 
-function StaffAdd() {
+function StaffAdd({ postStaff }) {
   const [modalOpen, setModalOpen] = useState(false);
   const toggleModal = () => {
     setModalOpen(!modalOpen);
   };
   const handleSubmit = (values) => {
-    console.log(values);
     toggleModal();
+    postStaff(
+      values.name,
+      values.dob,
+      values.salary,
+      values.startdate,
+      values.department,
+      values.annualleave,
+      values.overtime
+    );
   };
   const required = (val) => val && val.length;
   const maxLength = (len) => (val) => !val || val.length <= len;
@@ -119,13 +127,13 @@ function StaffAdd() {
                   id="department"
                   name="department"
                   className="form-control"
-                  defaultValue="Sale"
+                  defaultValue="Dept01"
                 >
-                  <option value="Sale">Sale</option>
-                  <option value="Hr">Hr</option>
-                  <option value="Marketing">Marketing</option>
-                  <option value="IT">IT</option>
-                  <option value="Finance">Finance</option>
+                  <option value="Dept01">Sale</option>
+                  <option value="Dept02">Hr</option>
+                  <option value="Dept03">Marketing</option>
+                  <option value="Dept04">IT</option>
+                  <option value="Dept05">Finance</option>
                 </Control.select>
               </Col>
             </Row>
@@ -144,15 +152,15 @@ function StaffAdd() {
               </Col>
             </Row>
             <Row className="form-group mt-2">
-              <Label htmlFor="timeoffleft" md={4}>
+              <Label htmlFor="annualleave" md={4}>
                 Số ngày nghỉ còn lại
               </Label>
               <Col md={8}>
                 <Control.input
                   type="number"
-                  model=".timeoffleft"
-                  name="timeoffleft"
-                  id="timeoffleft"
+                  model=".annualleave"
+                  name="annualleave"
+                  id="annualleave"
                   className="form-control"
                 />
               </Col>

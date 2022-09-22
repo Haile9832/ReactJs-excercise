@@ -20,7 +20,6 @@ function StaffDetail({
   staffsErrMess,
   deleteStaff,
   patchStaff,
-  departments,
 }) {
   const navigate = useNavigate();
   const [modalOpen, setModalOpen] = useState(false);
